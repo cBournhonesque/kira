@@ -47,7 +47,6 @@ impl StaticSound {
 		let settings = data.settings;
 		let starting_frame_index = starting_frame_index(settings, &data);
 		let ending_frame_index = ending_frame_index(settings, &data);
-		println!("start: {:?}, end: {:?}", starting_frame_index, ending_frame_index);
 		let position = starting_frame_index as f64 / data.sample_rate as f64;
 		let mut sound = Self {
 			command_consumer,
@@ -119,7 +118,6 @@ impl StaticSound {
 		if let Some(LoopBehavior { start_position }) = self.data.settings.loop_behavior {
 			let start_position = (start_position * self.data.sample_rate as f64) as i64;
 			if self.current_frame_index >= self.ending_frame_index {
-				println!("LOOPING. Curr frame: {:?}. Going back to frame: {:?}", self.current_frame_index, start_position);
 				self.current_frame_index = start_position;
 			} else {
 				self.current_frame_index += 1;
@@ -165,7 +163,6 @@ impl StaticSound {
 		let reached_end_of_sound = if self.playback_rate().is_sign_negative() {
 			self.decrement_position()
 		} else {
-			println!("INCREMENT POSITION");
 			self.increment_position()
 		};
 		if reached_end_of_sound {
